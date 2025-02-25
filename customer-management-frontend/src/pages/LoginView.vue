@@ -13,9 +13,9 @@ const handleLogin = async () => {
   errorMessage.value = ''
   try {
     const response = await login(email.value, password.value)
-    console.log('Login succsessfull:', response)
+    console.log('Login succsessfull')
 
-    localStorage.setItem('token', response.token)
+    sessionStorage.setItem('token', response.token)
 
     router.push('/customers')
   } catch (error) {

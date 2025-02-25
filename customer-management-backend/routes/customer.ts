@@ -1,10 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
 import { Customer } from "../models/Customer";
+import { verifyToken } from "../routes/authMiddleware";
 
 const router = express.Router();
 
 // Create new customer
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", verifyToken, async (req: Request, res: Response) => {
     try {
         const latestCustomer = await Customer.findOne().sort({ intNr: -1 });
 
@@ -34,17 +35,21 @@ router.post("/", async (req: Request, res: Response) => {
 });
 
 // Get all Customers
-router.get("/", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const customers = await Customer.find();
-        res.json(customers);
-    } catch (err) {
-        res.status(500).json({
-            message: "An error occurred",
-            error: err,
-        });
+router.get(
+    "/",
+    verifyToken,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const customers = await Customer.find();
+            res.json(customers);
+        } catch (err) {
+            res.status(500).json({
+                message: "An error occurred",
+                error: err,
+            });
+        }
     }
-});
+);
 
 // Get single Customer
 router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {

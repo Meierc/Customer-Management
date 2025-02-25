@@ -15,7 +15,7 @@ export const login = async (email: string, password: string) => {
       throw new Error('No token received')
     }
 
-    localStorage.setItem('token', token)
+    sessionStorage.setItem('token', token)
     return response.data
   } catch (error) {
     const axiosError = error as AxiosError
@@ -46,6 +46,6 @@ export const register = async (
 }
 
 export const logout = () => {
-  localStorage.removeItem('token')
+  sessionStorage.removeItem('token')
   window.location.reload()
 }

@@ -13,7 +13,6 @@ if (!MONGO_URI) {
 async function seedDB() {
     try {
         await mongoose.connect(MONGO_URI);
-        console.log("✅ MongoDB connected!");
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash("test123", salt);
@@ -26,7 +25,6 @@ async function seedDB() {
         });
 
         await user.save();
-        console.log("✅ Test-User saved!");
     } catch (err) {
         console.error("❌ Error during Seeding:", err);
     } finally {

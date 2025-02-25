@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:5000/customers'
 
 export const getCustomers = async (): Promise<Customer[]> => {
   try {
-    const token = localStorage.getItem('token')
+    const token = sessionStorage.getItem('token')
     const response = await axios.get<Customer[]>(`${API_URL}/`, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -18,7 +18,7 @@ export const getCustomers = async (): Promise<Customer[]> => {
 
 export const deleteCustomer = async (customerId: string): Promise<void> => {
   try {
-    const token = localStorage.getItem('token')
+    const token = sessionStorage.getItem('token')
     await axios.delete(`${API_URL}/${customerId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -33,7 +33,7 @@ export const updateCustomer = async (
   updatedData: Partial<Customer>,
 ): Promise<void> => {
   try {
-    const token = localStorage.getItem('token')
+    const token = sessionStorage.getItem('token')
     await axios.put(`${API_URL}/${customerId}`, updatedData, {
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -45,7 +45,7 @@ export const updateCustomer = async (
 
 export const addCustomer = async (customerData: Customer) => {
   try {
-    const token = localStorage.getItem('token')
+    const token = sessionStorage.getItem('token')
     await axios.post('http://localhost:5000/customers', customerData, {
       headers: { Authorization: `Bearer ${token}` },
     })

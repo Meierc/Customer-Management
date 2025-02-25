@@ -19,7 +19,7 @@ router.post("/register", async (req: any, res: any) => {
             return res.status(400).json({ message: "Email is already taken" });
         }
 
-        const passwordHash = await bcrypt.hash(password, 10); // 🔥 Jetzt korrekt als passwordHash speichern
+        const passwordHash = await bcrypt.hash(password, 10);
         const newUser = new User({ firstName, lastName, email, passwordHash });
 
         await newUser.save();

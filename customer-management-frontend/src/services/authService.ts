@@ -31,7 +31,7 @@ export const register = async (
   password: string,
 ) => {
   try {
-    await axios.post('http://localhost:5000/auth/register', {
+    await axios.post(`${API_URL}/register`, {
       firstName,
       lastName,
       email,
@@ -40,7 +40,7 @@ export const register = async (
   } catch (error) {
     const axiosError = error as AxiosError
     const errorMessage =
-      (axiosError.response?.data as { message?: string })?.message || 'Register has failed!'
+      (axiosError.response?.data as { message?: string })?.message || 'Registration has failed!'
     throw errorMessage
   }
 }

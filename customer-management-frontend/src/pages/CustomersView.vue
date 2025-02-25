@@ -44,7 +44,7 @@ onMounted(loadCustomers)
 
 onMounted(() => {
   loadCustomers()
-  window.addEventListener('updateCustomers', loadCustomers) // 📌 Beim Event aktualisieren
+  window.addEventListener('updateCustomers', loadCustomers)
 })
 
 const handleLogout = () => {

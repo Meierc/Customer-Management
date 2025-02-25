@@ -9,8 +9,8 @@ router.post("/", verifyToken, async (req: Request, res: Response) => {
     try {
         const latestCustomer = await Customer.findOne().sort({ intNr: -1 });
 
-        // If no customer exists, start with "K-0001"
-        let newIntNr = "K-0001";
+        // If no customer exists, start with "C-0001"
+        let newIntNr = "C-0001";
         if (latestCustomer) {
             const lastNumber = parseInt(latestCustomer.intNr.split("-")[1]); // Get the last number
             newIntNr = `K-${String(lastNumber + 1).padStart(4, "0")}`; // Increment & format

@@ -7,14 +7,13 @@ export const verifyToken = (
     next: NextFunction
 ) => {
     const token = req.headers.authorization?.split(" ")[1];
-    if (!token)
-        return res.status(401).json({ message: "Kein Token vorhanden" });
+    if (!token) return res.status(401).json({ message: "No token provided" });
 
     try {
-        const decoded = jwt.verify(token, "supergeheimesToken"); // Nutze deinen Secret Key
+        const decoded = jwt.verify(token, "superSecretToken");
         (req as any).user = decoded;
         next();
     } catch (err) {
-        res.status(403).json({ message: "Token ungültig" });
+        res.status(403).json({ message: "Invalid token" });
     }
 };

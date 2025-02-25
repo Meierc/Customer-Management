@@ -46,7 +46,7 @@ export const updateCustomer = async (
 export const addCustomer = async (customerData: Customer) => {
   try {
     const token = sessionStorage.getItem('token')
-    await axios.post('http://localhost:5000/customers', customerData, {
+    await axios.post(`${API_URL}`, customerData, {
       headers: { Authorization: `Bearer ${token}` },
     })
   } catch (error) {

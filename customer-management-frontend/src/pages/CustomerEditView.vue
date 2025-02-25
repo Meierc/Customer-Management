@@ -25,12 +25,9 @@ const loadCustomer = async () => {
 
 const saveChanges = async () => {
   if (!customer.value) return
-  try {
-    await updateCustomer(customerId, customer.value)
-    router.push('/customers')
-  } catch {
-    errorMessage.value = 'Error updating customer'
-  }
+  await updateCustomer(customerId, customer.value)
+  router.push('/customers')
+  window.dispatchEvent(new Event('updateCustomers'))
 }
 
 onMounted(loadCustomer)

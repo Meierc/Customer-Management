@@ -42,6 +42,11 @@ const handleDelete = async (id: string | null) => {
 
 onMounted(loadCustomers)
 
+onMounted(() => {
+  loadCustomers()
+  window.addEventListener('updateCustomers', loadCustomers) // 📌 Beim Event aktualisieren
+})
+
 const handleLogout = () => {
   logout()
   router.push('/')

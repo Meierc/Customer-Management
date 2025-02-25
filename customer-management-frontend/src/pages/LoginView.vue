@@ -8,18 +8,17 @@ const email = ref('')
 const password = ref('')
 const errorMessage = ref('')
 const router = useRouter()
+const loading = ref(false)
 
 const handleLogin = async () => {
-  errorMessage.value = ''
+  loading.value = true
   try {
-    const response = await login(email.value, password.value)
-    console.log('Login succsessfull')
-
-    sessionStorage.setItem('token', response.token)
-
+    await login(email.value, password.value)
     router.push('/customers')
   } catch (error) {
     errorMessage.value = error as string
+  } finally {
+    loading.value = false
   }
 }
 </script>

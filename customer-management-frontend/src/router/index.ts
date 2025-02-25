@@ -13,7 +13,7 @@ const routes = [
     component: CustomersView,
     meta: { requiresAuth: true },
   },
-  { path: '/customers/new', component: CustomerAddView },
+  { path: '/customers/new', component: CustomerAddView, meta: { requiresAuth: true } },
   {
     path: '/customers/:id',
     component: CustomerEditView,

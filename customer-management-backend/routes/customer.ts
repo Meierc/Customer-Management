@@ -52,67 +52,79 @@ router.get(
 );
 
 // Get single Customer
-router.get("/:id", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const customer = await Customer.findById(req.params.id);
-        if (!customer) {
-            res.status(404).json({ message: "Customer not found" });
-        } else {
-            res.json(customer);
-        }
-    } catch (err) {
-        res.status(500).json({
-            message: "An error occurred",
-            error: err,
-        });
-    }
-});
-
-// Update Customer
-router.put("/:id", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const { type } = req.body;
-
-        if (type && !["DEALER", "COMPANY", "PRIVATE"].includes(type)) {
-            res.status(400).json({
-                message:
-                    "Invalid customer type. Allowed are: DEALER, COMPANY, PRIVATE.",
+router.get(
+    "/:id",
+    verifyToken,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const customer = await Customer.findById(req.params.id);
+            if (!customer) {
+                res.status(404).json({ message: "Customer not found" });
+            } else {
+                res.json(customer);
+            }
+        } catch (err) {
+            res.status(500).json({
+                message: "An error occurred",
+                error: err,
             });
         }
-
-        const updatedCustomer = await Customer.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true, runValidators: true }
-        );
-
-        if (!updatedCustomer) {
-            res.status(404).json({ message: "Customer not found" });
-        } else {
-            res.json(updatedCustomer);
-        }
-    } catch (err) {
-        res.status(500).json({
-            message: "An error occurred",
-            error: err,
-        });
     }
-});
+);
+
+// Update Customer
+router.put(
+    "/:id",
+    verifyToken,
+    async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { type } = req.body;
+
+            if (type && !["DEALER", "COMPANY", "PRIVATE"].includes(type)) {
+                res.status(400).json({
+                    message:
+                        "Invalid customer type. Allowed are: DEALER, COMPANY, PRIVATE.",
+                });
+            }
+
+            const updatedCustomer = await Customer.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true, runValidators: true }
+            );
+
+            if (!updatedCustomer) {
+                res.status(404).json({ message: "Customer not found" });
+            } else {
+                res.json(updatedCustomer);
+            }
+        } catch (err) {
+            res.status(500).json({
+                message: "An error occurred",
+                error: err,
+            });
+        }
+    }
+);
 
 // Delete Customer
-router.delete("/:id", async (req: Request, res: Response): Promise<void> => {
-    try {
-        const result = await Customer.findByIdAndDelete(req.params.id);
+router.delete(
+    "/:id",
+    verifyToken,
+    async (req: Request, res: Response): Promise<void> => {
+        try {
+            const result = await Customer.findByIdAndDelete(req.params.id);
 
-        if (!result) {
-            res.status(404).json({ message: "Customer not found" });
-            return;
+            if (!result) {
+                res.status(404).json({ message: "Customer not found" });
+                return;
+            }
+
+            res.json({ message: "Customer successfully deleted" });
+        } catch (error) {
+            res.status(500).json({ message: "Error deleting customer" });
         }
-
-        res.json({ message: "Customer successfully deleted" });
-    } catch (error) {
-        res.status(500).json({ message: "Error deleting customer" });
     }
-});
+);
 
 export default router;

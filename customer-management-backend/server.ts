@@ -14,7 +14,9 @@ app.use(cors());
 
 // Database connection
 mongoose
-    .connect(process.env.MONGO_URI as string)
+    .connect(process.env.MONGO_URI as string, {
+        dbName: "customer-management",
+    })
     .then(() => console.log("✅ MongoDB connected"))
     .catch((err) => console.error("❌ MongoDB connection error:", err));
 

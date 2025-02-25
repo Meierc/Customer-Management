@@ -61,10 +61,13 @@ const handleLogout = () => {
         <v-btn variant="elevated" color="success" @click="router.push('/customers/new')">
           + Add Customer
         </v-btn>
-        <v-card class="pa-4">
-          <v-data-table
+        <v-card class="pa-4"
+          ><v-data-table
             v-if="!loading"
             :items="customers"
+            height="500px"
+            density="compact"
+            class="elevation-2"
             :headers="[
               { title: 'Customer Number', key: 'intNr' },
               { title: 'Company Name', key: 'addresses[0].companyName' },
@@ -74,7 +77,6 @@ const handleLogout = () => {
               { title: 'City', key: 'addresses[0].city' },
               { title: 'Actions', key: 'actions', sortable: false },
             ]"
-            class="elevation-2"
           >
             <template v-slot:[`item.actions`]="{ item }">
               <v-btn color="primary" variant="tonal" size="small" :to="`/customers/${item._id}`">
